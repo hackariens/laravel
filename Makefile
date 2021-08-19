@@ -12,11 +12,6 @@ ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   $(eval $(COMMAND_ARGS):;@:)
 endif
 
-dump:
-	@mkdir dump
-
-folders: dump ## Create folder
-
 composer: isdocker ### Scripts for composer
 ifeq ($(COMMAND_ARGS),suggests)
 	$(DOCKER_EXECPHP) make composer suggests
@@ -46,7 +41,7 @@ else
 	@echo "validate: COMPOSER validate"
 endif
 
-install: folders node_modules ## Installation
+install: node_modules ## Installation
 	@make docker deploy -i
 
 linter: node_modules isdocker ### Scripts Linter
