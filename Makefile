@@ -12,6 +12,14 @@ ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   $(eval $(COMMAND_ARGS):;@:)
 endif
 
+GREEN := \033[0;32m
+RED := \033[0;31m
+YELLOW := \033[0;33m
+NC := \033[0m
+NEED := ${GREEN}%-20s${NC}: %s\n
+MISSING :=${RED}ARGUMENT missing${NC}\n
+ARGUMENTS := make ${PURPLE}%s${NC} ${YELLOW}ARGUMENT${NC}\n
+
 composer: isdocker ### Scripts for composer
 ifeq ($(COMMAND_ARGS),suggests)
 	$(DOCKER_EXECPHP) make composer suggests
@@ -28,17 +36,17 @@ else ifeq ($(COMMAND_ARGS),update)
 else ifeq ($(COMMAND_ARGS),validate)
 	$(DOCKER_EXECPHP) make composer validate
 else
-	@echo "ARGUMENT missing"
+	@printf "${MISSING}"
 	@echo "---"
-	@echo "make composer ARGUMENT"
+	@printf "${ARGUMENTS}" composer
 	@echo "---"
-	@echo "suggests: suggestions package pour PHP"
-	@echo "outdated: Packet php outdated"
-	@echo "fund: Discover how to help fund the maintenance of your dependencies."
-	@echo "prod: Installation version de prod"
-	@echo "dev: Installation version de dev"
-	@echo "update: COMPOSER update"
-	@echo "validate: COMPOSER validate"
+	@printf "${NEED}" "suggests" "suggestions package pour PHP"
+	@printf "${NEED}" "outdated" "Packet php outdated"
+	@printf "${NEED}" "fund" "Discover how to help fund the maintenance of your dependencies."
+	@printf "${NEED}" "prod" "Installation version de prod"
+	@printf "${NEED}" "dev" "Installation version de dev"
+	@printf "${NEED}" "update" "COMPOSER update"
+	@printf "${NEED}" "validate" "COMPOSER validate"
 endif
 
 install: node_modules ## Installation
@@ -50,10 +58,10 @@ ifeq ($(COMMAND_ARGS),all)
 else ifeq ($(COMMAND_ARGS),readme)
 	@npm run linter-markdown README.md
 else
-	@echo "ARGUMENT missing"
+	@printf "${MISSING}"
 	@echo "---"
-	@echo "make linter ARGUMENT"
+	@printf "${ARGUMENTS}" linter
 	@echo "---"
-	@echo "all: ## Launch all linter"
-	@echo "readme: linter README.md"
+	@printf "${NEED}" "all" "## Launch all linter"
+	@printf "${NEED}" "readme" "linter README.md"
 endif
