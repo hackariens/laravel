@@ -12,40 +12,40 @@ ifneq "$(SUPPORTS_MAKE_ARGS)" ""
   $(eval $(COMMAND_ARGS):;@:)
 endif
 
-GREEN := \033[0;32m
-RED := \033[0;31m
-YELLOW := \033[0;33m
-NC := \033[0m
-NEED := ${GREEN}%-20s${NC}: %s\n
-MISSING :=${RED}ARGUMENT missing${NC}\n
-ARGUMENTS := make ${PURPLE}%s${NC} ${YELLOW}ARGUMENT${NC}\n
+COMPOSER_EXEC := ${DOCKER_EXECPHP} composer
+
+apps/composer.lock: isdocker apps/composer.json
+	${COMPOSER_EXEC} update
+
+apps/vendor: isdocker apps/composer.json
+	${COMPOSER_EXEC} install --no-progress --prefer-dist --optimize-autoloader
 
 composer: isdocker ### Scripts for composer
 ifeq ($(COMMAND_ARGS),suggests)
-	$(DOCKER_EXECPHP) make composer suggests
-else ifeq ($(COMMAND_ARGS),outdated)
-	$(DOCKER_EXECPHP) make composer outdated
-else ifeq ($(COMMAND_ARGS),fund)
-	$(DOCKER_EXECPHP) make composer fund
-else ifeq ($(COMMAND_ARGS),prod)
-	$(DOCKER_EXECPHP) make composer prod
-else ifeq ($(COMMAND_ARGS),dev)
-	$(DOCKER_EXECPHP) make composer dev
-else ifeq ($(COMMAND_ARGS),update)
-	$(DOCKER_EXECPHP) make composer update
-else ifeq ($(COMMAND_ARGS),validate)
-	$(DOCKER_EXECPHP) make composer validate
+	${COMPOSER_EXEC} suggests --by-suggestion
+else ifeq ($(COMMANDS_ARGS),outdated)
+	${COMPOSER_EXEC} outdated
+else ifeq ($(COMMANDS_ARGS),fund)
+	${COMPOSER_EXEC} fund
+else ifeq ($(COMMANDS_ARGS),prod)
+	${COMPOSER_EXEC} install --no-dev --no-progress --prefer-dist --optimize-autoloader
+else ifeq ($(COMMANDS_ARGS),dev)
+	${COMPOSER_EXEC} install --no-progress --prefer-dist --optimize-autoloader
+else ifeq ($(COMMANDS_ARGS),u)
+	${COMPOSER_EXEC} update
+else ifeq ($(COMMANDS_ARGS),i)
+	${COMPOSER_EXEC} install
+else ifeq ($(COMMANDS_ARGS),validate)
+	${COMPOSER_EXEC} validate
 else
-	@printf "${MISSING}"
-	@echo "---"
-	@printf "${ARGUMENTS}" composer
-	@echo "---"
+	@printf "${MISSING_ARGUMENTS}" "composer"
 	@printf "${NEED}" "suggests" "suggestions package pour PHP"
+	@printf "${NEED}" "i" "install"
 	@printf "${NEED}" "outdated" "Packet php outdated"
 	@printf "${NEED}" "fund" "Discover how to help fund the maintenance of your dependencies."
 	@printf "${NEED}" "prod" "Installation version de prod"
 	@printf "${NEED}" "dev" "Installation version de dev"
-	@printf "${NEED}" "update" "COMPOSER update"
+	@printf "${NEED}" "u" "COMPOSER update"
 	@printf "${NEED}" "validate" "COMPOSER validate"
 endif
 
@@ -58,10 +58,7 @@ ifeq ($(COMMAND_ARGS),all)
 else ifeq ($(COMMAND_ARGS),readme)
 	@npm run linter-markdown README.md
 else
-	@printf "${MISSING}"
-	@echo "---"
-	@printf "${ARGUMENTS}" linter
-	@echo "---"
+	@printf "${MISSING_ARGUMENTS}" linter
 	@printf "${NEED}" "all" "## Launch all linter"
 	@printf "${NEED}" "readme" "linter README.md"
 endif
