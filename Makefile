@@ -39,14 +39,16 @@ else ifeq ($(COMMANDS_ARGS),validate)
 	${COMPOSER_EXEC} validate
 else
 	@printf "${MISSING_ARGUMENTS}" "composer"
-	@printf "${NEED}" "suggests" "suggestions package pour PHP"
-	@printf "${NEED}" "i" "install"
-	@printf "${NEED}" "outdated" "Packet php outdated"
-	@printf "${NEED}" "fund" "Discover how to help fund the maintenance of your dependencies."
-	@printf "${NEED}" "prod" "Installation version de prod"
-	@printf "${NEED}" "dev" "Installation version de dev"
-	@printf "${NEED}" "u" "COMPOSER update"
-	@printf "${NEED}" "validate" "COMPOSER validate"
+	$(call array_arguments, \
+		["suggests"]="suggestions package pour PHP" \
+		["i"]="install" \
+		["outdated"]="Packet php outdated" \
+		["fund"]="Discover how to help fund the maintenance of your dependencies." \
+		["prod"]="Installation version de prod" \
+		["dev"]="Installation version de dev" \
+		["u"]="COMPOSER update" \
+		["validate"]="COMPOSER validate" \
+	)
 endif
 
 install: node_modules ## Installation
@@ -58,7 +60,9 @@ ifeq ($(COMMAND_ARGS),all)
 else ifeq ($(COMMAND_ARGS),readme)
 	@npm run linter-markdown README.md
 else
-	@printf "${MISSING_ARGUMENTS}" linter
-	@printf "${NEED}" "all" "## Launch all linter"
-	@printf "${NEED}" "readme" "linter README.md"
+	@printf "${MISSING_ARGUMENTS}" "linter"
+	$(call array_arguments, \
+		["all"]="## Launch all linter" \
+		["readme"]="linter README.md" \
+	)
 endif
