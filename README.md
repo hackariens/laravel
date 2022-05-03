@@ -29,8 +29,14 @@ docker swarm
 Hosts:
 
 - laravel.traefik.me
-- mailhog-laravel.traefik.me
-- phpmyadmin-laravel.traefik.me
+
+## Download
+
+```sh
+git clone git@github.com:koromerzhin/template-laravel.git template-laravel
+cd template-laravel
+git submodule update --init
+```
 
 ## Install
 
