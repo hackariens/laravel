@@ -20,7 +20,7 @@
         "fakerphp/faker": "1.13.0",
         "laravel/sail": "1.4.8",
         "mockery/mockery": "1.4.3",
-        "nunomaduro/collision": "5.3.0",
+        "nunomaduro/collision": "5.11.0",
         "phpunit/phpunit": "9.5.3"
     },
     "config": {
