@@ -14,7 +14,7 @@
     "composer:suggests": "docker exec -ti $(npx korojscommands docker_getname-container --container phpfpm) composer suggests --by-suggestion",
     "composer:update": "docker exec -ti $(npx korojscommands docker_getname-container --container phpfpm) composer update",
     "composer:validate": "docker exec -ti $(npx korojscommands docker_getname-container --container phpfpm) composer validate",
-    "create:apps": "docker container run -v $(pwd)/:/var/www --user $(id -u):$(id -g) -it $(npx korojscommands docker_get-image --key phpfpm) composer create-project laravel/laravel apps",
+    "create:apps": "docker container run -v $(pwd)/:/var/www --user $(id -u):$(id -g) $(npx korojscommands docker_get-image --key phpfpm) composer create-project laravel/laravel apps --no-interaction",
     "docker:deploy": "korojscommands docker_deploy",
     "docker:getpull-image": "korojscommands docker_getpull-image",
     "docker:ls": "korojscommands docker_ls",
