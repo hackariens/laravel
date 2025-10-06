@@ -1,8 +1,8 @@
 version: "3.4"
 networks:
-  proxylampy:
+  proxyhackariens:
     external: true
-  serverlampy:
+  serverhackariens:
     external: true
   net:
     driver: overlay
@@ -17,7 +17,7 @@ services:
       - redis
     volumes:
       - ${PWD}/apps:/var/www/:rw
-      - ${PWD}/conf/php.ini-development:/usr/local/etc/php/conf.d/php.ini
+      - ${PWD}/conf/php.ini-production:/usr/local/etc/php/conf.d/php.ini
       - ${PWD}/conf/apache2/000-default.conf:/etc/apache2/sites-available/000-default.conf:ro
       - ${PWD}/conf/apache2/apache2.conf:/etc/apache2/apache2.conf:ro
       - ${PWD}/conf/init-laravel.sh:/usr/local/bin/init-laravel.sh:rw
@@ -29,12 +29,12 @@ services:
       "
     networks:
       - net
-      - serverlampy
-      - proxylampy
+      - serverhackariens
+      - proxyhackariens
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.http.routers.laravel.rule=Host(`laravel.traefik.me`)"
-        - "traefik.http.routers.laravel-tls.tls.domains[0].main=laravel.traefik.me"
+        - "traefik.http.routers.laravel.rule=Host(`laravel.hackariens.fr`)"
         - "traefik.http.routers.laravel.tls=true"
+        - "traefik.http.routers.laravel.tls.certresolver=myresolver"
         - "traefik.http.services.laravel.loadbalancer.server.port=80"
