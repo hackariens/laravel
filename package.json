@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Templates pour la création d'un nouveau projet laravel",
   "scripts": {
-    "lint:markdown": "markdownlint README.md",
+    "lint:markdown": "markdownlint README.md"
   },
   "repository": {
     "type": "git",
