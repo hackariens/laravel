@@ -1,3 +1,5 @@
 /node_modules
 /apps
 .env
+conf/apache2
+install
