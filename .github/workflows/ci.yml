@@ -74,16 +74,16 @@ jobs:
       
       - name: Setup database and infrastructure
         run: |
-          task drupal:copysql
+          task laravel:copysql
           cd lampy && task lampy:exec
       
       - name: Deploy containers
         run: |
-          task drupal:getpull-image
-          task drupal:getapacheconf
+          task laravel:getpull-image
+          task laravel:getapacheconf
           task create:apps
-          task drupal:deploy
-          task drupal:waiting
+          task laravel:deploy
+          task laravel:waiting
       # === LINTING PHASE ===
       - name: Frontend linting
         run: |
@@ -92,7 +92,7 @@ jobs:
       
       - name: Setup PHP tools and permissions
         run: |
-          task drupal:ls
+          task laravel:ls
           sudo chown -R $USER:$USER ./apps
           sudo chmod -R 755 ./apps
       
