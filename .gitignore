@@ -3,3 +3,5 @@
 .env
 conf/apache2
 install
+docker-compose-*.yml
+!docker-compose-lampy.yml
