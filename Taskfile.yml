@@ -45,6 +45,7 @@ tasks:
   help:
     desc: "Affiche l'aide détaillée"
     aliases: [ h ]
+    silent: true
     cmds:
     - task: default
 
@@ -53,7 +54,7 @@ tasks:
     silent: true
     cmds:
     - rm -rf ./conf/apache2 || true
-    - docker create --name laravel-php koromerzhin/php:8.4.3-apache-symfony 
+    - docker create --name laravel-php koromerzhin/php:8.4.3-apache-symfony
     - mkdir -p ./conf/apache2
     - docker cp laravel-php:/etc/apache2/sites-available/000-default.conf ./conf/apache2/000-default.conf
     - docker cp laravel-php:/etc/apache2/apache2.conf ./conf/apache2/apache2.conf
@@ -79,7 +80,7 @@ tasks:
       vars:
         SOURCE_FILE: ./{{.FOLDERSQL}}/{{.FILESQL}}
         DEST_DIR: "{{.FOLDERLAMPY}}/mariadb_init/"
-        FORCE: "true"
+        FORCE: true
 
   laravel:getpull-image:
     desc: "Télécharge les images Docker définies dans le docker-compose.yml"
@@ -117,6 +118,7 @@ tasks:
 
   laravel:exec:
     desc: "Exécute une commande dans un conteneur en cours d'exécution"
+    silent: true
     cmds:
     - task: laravel:copysql
     - task: laravel:getapacheconf
@@ -127,6 +129,7 @@ tasks:
 
   laravel:download-phar:
     desc: "Télécharger les différents fichiers phar"
+    silent: true
     cmds:
     - task: download:php:tools
       vars:
@@ -134,6 +137,7 @@ tasks:
 
   laravel:bash:
     desc: "Ouvre un shell bash dans le conteneur www"
+    silent: true
     cmds:
     - task: docker:stack:shell
       vars:
