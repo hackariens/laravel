@@ -9,7 +9,7 @@ networks:
     attachable: true
 services:
   www:
-    image: koromerzhin/php:8.4.3-apache
+    image: koromerzhin/php:8.4.13-apache
     depends_on:
       - mariadb
       - mercure
