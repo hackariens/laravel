@@ -21,7 +21,7 @@ vars:
   FILESQL: '{{.FILESQL | default "dump.sql"}}'
   FOLDERLAMPY: '{{.FOLDERLAMPY | default "lampy"}}'
   SERVERNAME: '{{.SERVERNAME | default "laravel.traefik.me"}}'
-  DOCKERCOMPOSEFILE: '{{.DOCKERCOMPOSEFILE | default "docker-compose.yml"}}'
+  DOCKERCOMPOSEFILE: '{{.DOCKERCOMPOSEFILE | default "docker-compose-lampy.yml"}}'
 
 tasks:
   default:
@@ -154,9 +154,7 @@ tasks:
     desc: "Créer l'install de laravel"
     silent: true
     cmds:
-    - mkdir -p ./install
-    - docker run --rm -v $(pwd)/install:/var/www -w /var/www $(pwd)/apps:/var/www -w /var/www $(awk '/www:/ {f=1} f && /image:/ {print $2; exit}' {{.DOCKERCOMPOSEFILE}}) composer create-project laravel/laravel apps --no-interaction
-    - cp -r ./install/apps/ .
+    - docker run --rm -v $(pwd):/var/www -w /var/www $(awk '/www:/ {f=1} f && /image:/ {print $2; exit}' {{.DOCKERCOMPOSEFILE}}) composer create-project laravel/laravel apps --no-interaction
 
   laravel:cmd-exec:
     desc: "Affiche les informations Symfony"
