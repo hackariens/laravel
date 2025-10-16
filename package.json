@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Templates pour la création d'un nouveau projet laravel",
   "scripts": {
-    "lint:markdown": "markdownlint README.md"
+    "lint:markdown": "markdownlint README.md",
+    "release": "release-it"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,10 @@
   "homepage": "https://github.com/hackariens/laravel#readme",
   "devDependencies": {
     "cypress": "^15.3.0",
+    "dotenv": "^17.2.3",
     "jscpd": "^4.0.5",
     "markdownlint-cli": "^0.45.0",
+    "release-it": "^19.0.5",
     "yaml": "^2.8.1"
   }
 }
