@@ -124,8 +124,8 @@ jobs:
       - name: Setup PHP tools and permissions
         run: |
           task laravel:ls
-          sudo chown -R $USER:$USER ./apps
-          sudo chmod -R 755 ./apps
+          sudo chown -R "$USER:$USER" "./apps"
+          sudo chmod -R 755 "./apps"
       
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
